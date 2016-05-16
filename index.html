@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+
+<html>
+	<head>
+		<meta charset="utf-8"/>
+		<title>GeosmartCity Comments</title>
+		<meta name='viewport' content='initial-scale=1,maximum-scale=1,user-scalable=no' />
+		
+		<link rel="stylesheet" href="leaflet.css"/>
+		
+		<!-- Loading JQuery -->
+		<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.0/jquery.min.js"></script>
+		
+		 <!-- Load Leaflet from CDN-->
+		  <link rel="stylesheet" href="https://cdn.jsdelivr.net/leaflet/1.0.0-beta.2/leaflet.css" />
+		  <script src="https://cdn.jsdelivr.net/leaflet/1.0.0-beta.2/leaflet.js"></script>
+
+		<!-- Load Esri Leaflet from CDN -->
+		  <script src="https://cdn.jsdelivr.net/leaflet.esri/2.0.0-beta.8/esri-leaflet.js"></script>
+
+		<!-- Loading leaflet-geocoder -->
+		<link rel="stylesheet" href="https://cdn.jsdelivr.net/leaflet.esri.geocoder/2.0.2/esri-leaflet-geocoder.css" />
+		<script src="https://cdn.jsdelivr.net/leaflet.esri.geocoder/2.0.2/esri-leaflet-geocoder.js"></script>
+		
+		
+	</head>
+	<body>
+		<!--
+		<div id="testing-comment">
+			<input type="button" value="Toggle comments" onclick="$('#comment-page').css('display','block');$('#testing-comment').css('display','none');"/>
+		</div>
+		-->
+	
+		<div id="mapid"></div>
+		
+		<div id="map-form">
+			<!-- Latitude: <input type="text" id="lat"/>
+			Longitude: <input type="text" id="long"/>
+			<input type="button" id="validation_but" value="Validation" onclick="goTo($('#lat').val(), $('#long').val())"/>
+			<br/>-->
+			Address: <input type="text" id="addr"/>
+			<input type="button" id="val_addr" value="Search" onclick="addr_search()"/>
+            <input type="button" id="val_addr_clear" value="Clear" onclick="$('#search_answers').empty()"/>
+            <ul id="search_answers"></ul>
+		</div>
+        
+		<div id="comment-page">
+            <h2>Comments page</h2>
+			<div id="add-comment">
+                <h3>Add comment</h3>
+                <form name="add_comment_form" id="add-comment-form-id">
+                    Title: <input type="text" name="title"/>
+                    <br/>
+                    Type: 
+                    </br>
+                        <input type="radio" name="radio_button" value="Event" checked> Event<br/>
+                        <input type="radio" name="radio_button" value="Problem"/> Problem<br/>
+                        <input type="radio" name="radio_button" value="Info"/> Info<br/>
+                        <input type="radio" name="radio_button" value="Other"/> Other<br/>
+                        <input type="text" name="other"/>
+                    <br/>
+                    Description: 
+                    <br/>
+                    <textarea name="description" rows="4" cols="50"></textarea>
+                    <br/>
+                    <input type="button" value="Validate" onclick="validateComment(true);"/>
+                    <input type="button" value="Preview?" onclick="previewComment();"/>
+                    <input type="button" value="Cancel" onclick="validateComment(false);"/>
+                </form>
+			</div>
+			<div id="modify-comment">
+				<h3>Modify Comment</h3>
+                <div id="display"></div>
+				<input type="button" value="Modify" onclick="modifyComment(true);"/>
+				<input type="button" value="Delete" onclick="modifyComment(false);"/>
+			</div>
+		</div>
+		
+		<!-- Loading local js --> 
+			<script src="leaflet.js"></script>
+
+		<!-- Testing scripts -->
+            <script>        
+            
+            </script>
+	</body>
+</html>

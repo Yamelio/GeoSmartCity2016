@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+
+<>
+<head>
+    <meta charset="utf-8"/>
+    <link rel="stylesheet" href="leaflet.css"/>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.0/jquery.min.js"></script>
+    <link rel="stylesheet" href="http://cdn.leafletjs.com/leaflet/v0.7.7/leaflet.css" />
+    <script src="http://cdn.leafletjs.com/leaflet/v0.7.7/leaflet.js"></script>
+</head>
+
+<div id="mapid"></div>
+
+    <input type="text" id="lat">Latitude</input>
+    <input type="text" id="long">Longitude</input>
+    <input type="button" id="validation_but" value="Validation" onclick="goTo($('#lat').val(), $('#long').val())"/>
+    <input type="text" id="addr">Address</input>
+    <input type="button" id="val_addr" value="Search" onclick="addr_search()"/>
+<script>
+
+    /*$("body").click(function( event ) {
+        console.log(event.target)
+    });*/
+
+    var mymap = L.map('mapid').setView([51.99404, -0.05621], 13);
+    var popup = L.popup();
+    var idx_m = 0;
+    var tab_markers = {};
+
+    function goTo(lat, long){
+        mymap.setView([lat, long], 13);
+    }
+
+    function onMapClick(e) {
+        marker = L.marker(e.latlng).addTo(mymap);
+        marker.on("click", onMarkerClick);
+        tab_markers[idx_m]=marker;
+        idx_m++;
+    }
+
+    function onMarkerClick(e){
+        console.log(e.target);    //e.target gives the Object on which the event is called
+        marker = e.target;
+        //mymap.removeLayer(marker);
+    }
+    function addr_search() {
+        var inp = document.getElementById("addr");
+
+        $.getJSON('http://nominatim.openstreetmap.org/search?format=json&limit=5&q=' + inp.value, function(data) {
+            var items = [];
+
+            $.each(data, function(key, val) {
+                items.push(
+                        "<li><a href='#' onclick='chooseAddr(" +
+                        val.lat + ", " + val.lon + ");return false;'>" + val.display_name +
+                        '</a></li>'
+                );
+            });
+        });
+    }
+    function chooseAddr(lat, long){
+        var location = new L.LatLng(lat, long);
+        mymap.panTo(location);
+    }
+
+
+    mymap.on('click', onMapClick);
+
+    L.tileLayer('https://api.tiles.mapbox.com/v4/{id}/{z}/{x}/{y}.png?access_token={accessToken}', {
+        attribution: 'Map data &copy; <a href="http://openstreetmap.org">OpenStreetMap</a> contributors, <a href="http://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>, Imagery © <a href="http://mapbox.com">Mapbox</a>',
+        maxZoom: 18,
+        id: 'mapbox.streets',
+        accessToken: 'pk.eyJ1Ijoibm94aWxleCIsImEiOiJjaW1tMTI4cWQwMDF2d2Jsd2lycjQ5N3EwIn0.Fj4F6uUZM3C0U3TiaXZfOA'
+    }).addTo(mymap);
+
+    var geojsonFeature = {
+        "type": "Feature",
+        "properties": {
+            "name": "Coors Field",
+            "amenity": "Baseball Stadium",
+            "popupContent": "This is where the Rockies play!"
+        },
+        "geometry": {
+            "type": "Point",
+            "coordinates": [51.99404, -0.05621]
+        }
+    };
+    L.geoJson(geojsonFeature).addTo(mymap);
+    var myLayer = L.geoJson().addTo(mymap);
+    myLayer.addData(geojsonFeature);
+
+    var myLines = [{
+        "type": "LineString",
+        "coordinates": [[-100, 40], [-105, 45], [-110, 55]]
+    }, {
+        "type": "LineString",
+        "coordinates": [[-105, 40], [-110, 45], [-115, 55]]
+    }];
+
+    var myStyle = {
+        "color": "#ff7800",
+        "weight": 5,
+        "opacity": 0.65
+    };
+
+    L.geoJson(myLines, {
+        style: myStyle
+    }).addTo(mymap);
+
+    var polygon = L.polygon([
+        [51.509, -0.08],
+        [51.503, -0.06],
+        [51.51, -0.047]
+    ]).addTo(mymap);
+    polygon.bindPopup("I am a polygon.");
+</script>
+</body>
+</html>

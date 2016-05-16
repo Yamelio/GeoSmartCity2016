@@ -1,0 +1,45 @@
+body{
+	margin:0;
+	padding:0;
+}
+
+#mapid {
+	z-index:0;
+	height: 100vh;
+}
+
+#map-form {
+	margin-left:0px;
+	z-index:2;
+	padding: 5px;
+	background-color: white;
+	position:absolute;
+	left: 10px;
+	top: 80%;
+}
+
+#comment-page {
+	z-index:2;
+	position:absolute;
+	border-radius:25px;
+	padding: 10px;
+	left:10px;
+	top:10vh;
+	background-color:white;
+	display:none;
+}
+
+#testing-comment {
+	z-index:2;
+	position:absolute;
+	left:10px;
+	top:250px;
+}
+
+#add-comment {
+	display:none;
+}
+
+#modify-comment {
+	display:none;
+}
