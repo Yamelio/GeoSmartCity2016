@@ -118,6 +118,22 @@ for(var i = 0, max = radios.length; i < max; i++) {
 /*********************************************************/
 
 /**
+ * Makes a get request to the server on gis and return an array of objects with informations
+ * 
+ */
+function getRequest(){
+	var xhttp = new XMLHttpRequest();
+  	xhttp.onreadystatechange = function() {
+    	if (xhttp.readyState == 4 && xhttp.status == 200) {
+		var myArr = JSON.parse(xhttp.responseText);      
+		return myArr;
+    	}
+  	};
+  	xhttp.open("GET", "http://gis.dc.turkuamk.fi/guillaume.kleinpoort/baguette/marker.php", true);
+	xhttp.send();
+}
+
+/**
 *	Change the current view of the map to go to the 
 * 	wanted coordinates
 * @param {number} lat
